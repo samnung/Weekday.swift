@@ -1,6 +1,6 @@
 import Foundation
 
-enum Weekday: Int {
+public enum Weekday: Int {
     case sunday = 1
     case monday = 2
     case tuesday = 3
@@ -9,11 +9,11 @@ enum Weekday: Int {
     case friday = 6
     case saturday = 7
 
-    init(sundayStarting: Int) {
+    public init(sundayStarting: Int) {
         self.init(rawValue: sundayStarting)!
     }
 
-    init(mondayStarting: Int) {
+    public init(mondayStarting: Int) {
         switch mondayStarting {
         case 1: self = .monday
         case 2: self = .tuesday
@@ -27,16 +27,16 @@ enum Weekday: Int {
         }
     }
 
-    init(date: Date) {
+    public init(date: Date) {
         let weekdayIndex = Calendar.current.component(.weekday, from: date)
         self.init(sundayStarting: weekdayIndex)
     }
 
-    static var current: Weekday {
+    public static var current: Weekday {
         return Weekday(date: Date())
     }
 
-    static var all: [Weekday] {
+    public static var all: [Weekday] {
         let starting = Calendar.current.firstWeekday
 
         return (1...7).map {
@@ -51,7 +51,7 @@ enum Weekday: Int {
         }
     }
 
-    var next: Weekday {
+    public var next: Weekday {
         var index = Weekday.all.index(of: self)!
         index += 1
         if index > 6 {
@@ -60,7 +60,7 @@ enum Weekday: Int {
         return Weekday.all[index]
     }
 
-    var previous: Weekday {
+    public var previous: Weekday {
         var index = Weekday.all.index(of: self)!
         index -= 1
         if index < 0 {
@@ -69,27 +69,27 @@ enum Weekday: Int {
         return Weekday.all[index]
     }
 
-    var sundayStartingRawValue: Int {
+    public var sundayStartingRawValue: Int {
         return rawValue
     }
 
     /**
      Returns value that can be used as index to array where first item is Monday
      */
-    var indexValueForMondayStarting: Int {
+    public var indexValueForMondayStarting: Int {
         return indexValueFor(starting: Weekday.monday.rawValue)
     }
 
-    var indexValueForSundayStarting: Int {
+    public var indexValueForSundayStarting: Int {
         return indexValueFor(starting: Weekday.sunday.rawValue)
     }
 
-    var isToday: Bool {
+    public var isToday: Bool {
         let weekdayIndex = Calendar.current.component(.weekday, from: Date())
         return rawValue == weekdayIndex
     }
 
-    var localizedName: String {
+    public var localizedName: String {
         struct Static {
             static let weekdays = DateFormatter().standaloneWeekdaySymbols!
         }
@@ -97,7 +97,7 @@ enum Weekday: Int {
         return Static.weekdays[self.indexValueForSundayStarting]
     }
 
-    var shortLocalizedName: String {
+    public var shortLocalizedName: String {
         struct Static {
             static let weekdays = DateFormatter().shortWeekdaySymbols!
         }
@@ -105,7 +105,7 @@ enum Weekday: Int {
         return Static.weekdays[self.indexValueForSundayStarting]
     }
 
-    func indexValueFor(starting: Int) -> Int {
+    public func indexValueFor(starting: Int) -> Int {
         let round = starting - 1
 
         let newValue = self.rawValue - round - 1 // - 1 because of index starts at 0
@@ -116,8 +116,8 @@ enum Weekday: Int {
         }
     }
 
-    static func compare(_ lhs: Weekday, _ rhs: Weekday) -> Bool {
-        let firstday = Calendar.autoupdatingCurrent.firstWeekday
+    public static func compare(_ lhs: Weekday, _ rhs: Weekday) -> Bool {
+        let firstday = Calendar.current.firstWeekday
 
         let lhsAligned = lhs.indexValueFor(starting: firstday)
         let rhsAligned = rhs.indexValueFor(starting: firstday)

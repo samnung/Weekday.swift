@@ -120,7 +120,7 @@ public enum Weekday: Int {
     /**
      Searches for first matching weekday with input array
      */
-    func firstNext(from weekdays: [Weekday]) -> Weekday? {
+    public func firstNext(from weekdays: [Weekday]) -> Weekday? {
         if weekdays.isEmpty {
             return nil
         }

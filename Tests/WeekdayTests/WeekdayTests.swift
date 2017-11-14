@@ -55,7 +55,7 @@ final class WeekdayTests: QuickSpec {
     }
 
     describe("all") {
-      it("can generate all weekdays for current locale, monday starting") {
+      it("can generate all weekdays for czech locale, monday starting") {
         let expected: [Weekday] = [
           .monday,
           .tuesday,
@@ -73,7 +73,7 @@ final class WeekdayTests: QuickSpec {
         expect(actual).to(equal(expected))
       }
 
-      it("can generate all weekdays for current locale, sunday starting") {
+      it("can generate all weekdays for USA locale, sunday starting") {
         let expected: [Weekday] = [
           .sunday,
           .monday,
@@ -82,7 +82,7 @@ final class WeekdayTests: QuickSpec {
           .thursday,
           .friday,
           .saturday,
-          ]
+        ]
 
         let actual = with(locale: "en_US") {
           return Weekday.all
@@ -113,6 +113,38 @@ final class WeekdayTests: QuickSpec {
         expect(Weekday.thursday.previous).to(equal(Weekday.wednesday))
         expect(Weekday.wednesday.previous).to(equal(Weekday.tuesday))
         expect(Weekday.tuesday.previous).to(equal(Weekday.monday))
+      }
+    }
+
+    describe("first next") {
+      it("can find next day when it is first") {
+        let days: [Weekday] = [.tuesday, .wednesday]
+        let expectedTuesday = Weekday.monday.firstNext(from: days)
+        expect(expectedTuesday).to(equal(Weekday.tuesday))
+      }
+
+      it("can find next day when it is second") {
+        let days: [Weekday] = [.monday, .tuesday, .wednesday]
+        let expectedTuesday = Weekday.monday.firstNext(from: days)
+        expect(expectedTuesday).to(equal(Weekday.tuesday))
+      }
+
+      it("can find next day when it is not the first day after input day") {
+        let days: [Weekday] = [.thursday, .friday]
+        let expectedThursday = Weekday.monday.firstNext(from: days)
+        expect(expectedThursday).to(equal(Weekday.thursday))
+      }
+
+      it("can find next day when it is after sunday") {
+        let days: [Weekday] = [.thursday, .friday]
+        let expectedThursday = Weekday.friday.firstNext(from: days)
+        expect(expectedThursday).to(equal(Weekday.thursday))
+      }
+
+      it("returns nil when it can find") {
+        let days: [Weekday] = []
+        let expectedThursday = Weekday.friday.firstNext(from: days)
+        expect(expectedThursday).to(beNil())
       }
     }
   }

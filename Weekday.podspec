@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "Weekday.swift"
+  s.name         = "Weekday"
   s.version      = "0.1"
   s.summary      = "Neat Swift library for dealing with week days"
   s.description  = <<-DESC

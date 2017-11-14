@@ -56,6 +56,14 @@ Weekday.all.forEach {
 }
 ```
 
+## Installation
+
+Weekday.swift is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
+
+```ruby
+pod 'Weekday'
+```
+
 ## License
 
 MIT. See the [`LICENSE`](LICENSE) file for details.

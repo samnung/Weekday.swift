@@ -179,6 +179,15 @@ public enum Weekday: Int {
         return sundayStartingRawValue == weekdayIndex
     }
 
+    public var isoName: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        
+        let weekdays = dateFormatter.standaloneWeekdaySymbols!
+        
+        return weekdays[self.indexValueForCalendar]
+    }
+    
     public var localizedName: String {
         struct Static {
             static let weekdays = DateFormatter().standaloneWeekdaySymbols!

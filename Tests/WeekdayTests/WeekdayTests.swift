@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+import Foundation
 @testable import Weekday
 
 final class WeekdayTests: QuickSpec {
@@ -86,6 +87,27 @@ final class WeekdayTests: QuickSpec {
 
         let actual = with(locale: "en_US") {
           return Weekday.all
+        }
+
+        expect(actual).to(equal(expected))
+      }
+
+      it("can generate all weekdays for specific calendar (USA in this example)") {
+        let expected: [Weekday] = [
+          .sunday,
+          .monday,
+          .tuesday,
+          .wednesday,
+          .thursday,
+          .friday,
+          .saturday,
+        ]
+
+        let actual: [Weekday] = with(locale: "cs_CZ") {
+          var calendar = Calendar(identifier: .gregorian)
+          calendar.locale = Locale(identifier: "en_US")
+
+          return Weekday.all(for: calendar)
         }
 
         expect(actual).to(equal(expected))

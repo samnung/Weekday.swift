@@ -72,7 +72,14 @@ public enum Weekday: Int {
      Creates list of all weekdays in week, respects firstWeekday settings in `Calendar.current`
      */
     public static var all: [Weekday] {
-        let starting = Calendar.current.firstWeekday
+        return all(for: .current)
+    }
+
+    /**
+     Creates list of all weekdays in week, respects firstWeekday settings in passed calendar instance
+    */
+    public static func all(for calendar: Calendar) -> [Weekday] {
+        let starting = calendar.firstWeekday
 
         return (1...7).map {
             let round = starting - 1
@@ -100,32 +107,43 @@ public enum Weekday: Int {
     }
 
     public var next: Weekday {
-        var index = Weekday.all.firstIndex(of: self)!
+        return self.next(for: .current)
+    }
+
+    public func next(for calendar: Calendar) -> Weekday {
+        let allWeekdays = Weekday.all(for: calendar)
+        var index = allWeekdays.firstIndex(of: self)!
         index += 1
         if index > 6 {
             index -= 7
         }
-        return Weekday.all[index]
+
+        return allWeekdays[index]
     }
 
     public var previous: Weekday {
-        var index = Weekday.all.firstIndex(of: self)!
+        return self.previous(for: .current)
+    }
+
+    public func previous(for calendar: Calendar) -> Weekday {
+        let allWeekdays = Weekday.all(for: calendar)
+        var index = allWeekdays.firstIndex(of: self)!
         index -= 1
         if index < 0 {
             index += 7
         }
-        return Weekday.all[index]
+        return allWeekdays[index]
     }
 
     /**
      Searches for first matching weekday with input array
      */
-    public func firstNext(from weekdays: [Weekday]) -> Weekday? {
+    public func firstNext(from weekdays: [Weekday], for calendar: Calendar = .current) -> Weekday? {
         if weekdays.isEmpty {
             return nil
         }
 
-        let current = self.next
+        let current = self.next(for: calendar)
         if weekdays.contains(current) {
             return current
         } else {

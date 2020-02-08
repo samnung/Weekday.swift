@@ -197,6 +197,9 @@ public enum Weekday: Int {
         return sundayStartingRawValue == weekdayIndex
     }
 
+    /**
+     Localized name using `Calendar.current`
+     */
     public var localizedName: String {
         struct Static {
             static let weekdays = DateFormatter().standaloneWeekdaySymbols!
@@ -205,6 +208,9 @@ public enum Weekday: Int {
         return Static.weekdays[self.indexValueForCalendar]
     }
 
+    /**
+     Short localized name using `Calendar.current`
+    */
     public var shortLocalizedName: String {
         struct Static {
             static let weekdays = DateFormatter().shortWeekdaySymbols!
@@ -213,8 +219,20 @@ public enum Weekday: Int {
         return Static.weekdays[self.indexValueForCalendar]
     }
 
+    /**
+     Compare method that can be used in `Collection.sorted` method
+    */
     public static func compare(_ lhs: Weekday, _ rhs: Weekday) -> Bool {
-        let firstday = Calendar.current.firstWeekday
+        return compare(lhs, rhs, for: .current)
+    }
+
+    /**
+     Compare method that can be used in `Collection.sorted` method
+
+     Default parameter can't be used with passing reference to method. For example in `[1, 2, 3].sorted(by: Weekday.compare)`
+    */
+    public static func compare(_ lhs: Weekday, _ rhs: Weekday, for calendar: Calendar) -> Bool {
+        let firstday = calendar.firstWeekday
 
         let lhsAligned = lhs.indexValueFor(starting: firstday)
         let rhsAligned = rhs.indexValueFor(starting: firstday)
@@ -232,9 +250,5 @@ public enum Weekday: Int {
         } else {
             return newValue
         }
-    }
-
-    static func compare(_ lhs: Int, _ rhs: Int) -> Bool {
-        return compare(Weekday(sundayStarting: lhs), Weekday(sundayStarting: rhs))
     }
 }

@@ -100,7 +100,7 @@ public enum Weekday: Int {
     }
 
     public var next: Weekday {
-        var index = Weekday.all.index(of: self)!
+        var index = Weekday.all.firstIndex(of: self)!
         index += 1
         if index > 6 {
             index -= 7
@@ -109,7 +109,7 @@ public enum Weekday: Int {
     }
 
     public var previous: Weekday {
-        var index = Weekday.all.index(of: self)!
+        var index = Weekday.all.firstIndex(of: self)!
         index -= 1
         if index < 0 {
             index += 7

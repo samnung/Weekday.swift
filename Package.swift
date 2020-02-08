@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.0
 import PackageDescription
 
 let package = Package(
@@ -24,5 +24,5 @@ let package = Package(
             name: "WeekdayTests",
             dependencies: ["Weekday", "Nimble", "Quick", "OverrideLocale"]),
     ],
-    swiftLanguageVersions: [3, 4]
+    swiftLanguageVersions: [.v4, .v4_2, .v5]
 )

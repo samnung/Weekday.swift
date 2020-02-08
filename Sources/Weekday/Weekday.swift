@@ -72,7 +72,14 @@ public enum Weekday: Int {
      Creates list of all weekdays in week, respects firstWeekday settings in `Calendar.current`
      */
     public static var all: [Weekday] {
-        let starting = Calendar.current.firstWeekday
+        return all(for: .current)
+    }
+
+    /**
+     Creates list of all weekdays in week, respects firstWeekday settings in passed calendar instance
+    */
+    public static func all(for calendar: Calendar) -> [Weekday] {
+        let starting = calendar.firstWeekday
 
         return (1...7).map {
             let round = starting - 1
@@ -100,32 +107,43 @@ public enum Weekday: Int {
     }
 
     public var next: Weekday {
-        var index = Weekday.all.index(of: self)!
+        return self.next(for: .current)
+    }
+
+    public func next(for calendar: Calendar) -> Weekday {
+        let allWeekdays = Weekday.all(for: calendar)
+        var index = allWeekdays.firstIndex(of: self)!
         index += 1
         if index > 6 {
             index -= 7
         }
-        return Weekday.all[index]
+
+        return allWeekdays[index]
     }
 
     public var previous: Weekday {
-        var index = Weekday.all.index(of: self)!
+        return self.previous(for: .current)
+    }
+
+    public func previous(for calendar: Calendar) -> Weekday {
+        let allWeekdays = Weekday.all(for: calendar)
+        var index = allWeekdays.firstIndex(of: self)!
         index -= 1
         if index < 0 {
             index += 7
         }
-        return Weekday.all[index]
+        return allWeekdays[index]
     }
 
     /**
      Searches for first matching weekday with input array
      */
-    public func firstNext(from weekdays: [Weekday]) -> Weekday? {
+    public func firstNext(from weekdays: [Weekday], for calendar: Calendar = .current) -> Weekday? {
         if weekdays.isEmpty {
             return nil
         }
 
-        let current = self.next
+        let current = self.next(for: calendar)
         if weekdays.contains(current) {
             return current
         } else {
@@ -179,6 +197,9 @@ public enum Weekday: Int {
         return sundayStartingRawValue == weekdayIndex
     }
 
+    /**
+     Localized name using `Calendar.current`
+     */
     public var localizedName: String {
         struct Static {
             static let weekdays = DateFormatter().standaloneWeekdaySymbols!
@@ -187,6 +208,9 @@ public enum Weekday: Int {
         return Static.weekdays[self.indexValueForCalendar]
     }
 
+    /**
+     Short localized name using `Calendar.current`
+    */
     public var shortLocalizedName: String {
         struct Static {
             static let weekdays = DateFormatter().shortWeekdaySymbols!
@@ -195,8 +219,20 @@ public enum Weekday: Int {
         return Static.weekdays[self.indexValueForCalendar]
     }
 
+    /**
+     Compare method that can be used in `Collection.sorted` method
+    */
     public static func compare(_ lhs: Weekday, _ rhs: Weekday) -> Bool {
-        let firstday = Calendar.current.firstWeekday
+        return compare(lhs, rhs, for: .current)
+    }
+
+    /**
+     Compare method that can be used in `Collection.sorted` method
+
+     Default parameter can't be used with passing reference to method. For example in `[1, 2, 3].sorted(by: Weekday.compare)`
+    */
+    public static func compare(_ lhs: Weekday, _ rhs: Weekday, for calendar: Calendar) -> Bool {
+        let firstday = calendar.firstWeekday
 
         let lhsAligned = lhs.indexValueFor(starting: firstday)
         let rhsAligned = rhs.indexValueFor(starting: firstday)
@@ -214,9 +250,5 @@ public enum Weekday: Int {
         } else {
             return newValue
         }
-    }
-
-    static func compare(_ lhs: Int, _ rhs: Int) -> Bool {
-        return compare(Weekday(sundayStarting: lhs), Weekday(sundayStarting: rhs))
     }
 }

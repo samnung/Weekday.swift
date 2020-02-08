@@ -9,8 +9,8 @@ let package = Package(
             targets: ["Weekday"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Quick/Nimble.git", .upToNextMinor(from: "7.0.2")),
-        .package(url: "https://github.com/Quick/Quick.git", .upToNextMinor(from: "1.2.0")),
+        .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "8.0.2")),
+        .package(url: "https://github.com/Quick/Quick.git", .upToNextMajor(from: "2.2.0")),
     ],
     targets: [
         .target(

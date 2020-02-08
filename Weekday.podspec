@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Weekday"
-  s.version      = "0.1"
+  s.version      = "0.2"
   s.summary      = "Neat Swift library for dealing with week days"
   s.description  = <<-DESC
     Is neat Swift library for dealing with weekdays. All of us hates when we have to deal with weekdays, they don't make much sense in code. That's why exists this library.

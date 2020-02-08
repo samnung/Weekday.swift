@@ -1,7 +1,7 @@
 # Weekday.swift
 
 [![CocoaPods](https://img.shields.io/cocoapods/v/Weekday.svg)](https://cocoapods.org/pods/Weekday)
-[![Platforms](https://img.shields.io/cocoapods/p/Quick.svg)](https://cocoapods.org/pods/Quick)
+[![Platforms](https://img.shields.io/cocoapods/p/Weekday.svg)](https://cocoapods.org/pods/Weekday)
 
 Is neat Swift library for dealing with weekdays. All of us hates when we have to deal with weekdays, they don't make much sense in code. That's why exists this library.
 
@@ -62,6 +62,14 @@ Weekday.swift is available through [CocoaPods](http://cocoapods.org). To install
 
 ```ruby
 pod 'Weekday'
+```
+
+### Swift Package Manager
+
+Weekday.swift is also available through Swift Package Manager. Add following line to dependecies in your `Package.swift` file:
+
+```swift
+    .package(url: "https://github.com/samnung/Weekday.swift.git", .upToNextMajor(from: "0.2")),
 ```
 
 ## License

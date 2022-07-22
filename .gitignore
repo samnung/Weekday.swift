@@ -67,3 +67,4 @@ fastlane/screenshots
 fastlane/test_output
 vendor/gems
 .bundle/config
+Gemfile.lock
